@@ -9,6 +9,7 @@ void mifuncion(){
 }
 void misegundafuncion(){
   //hola 
+  //que tal 
 }
 void loop() {
   // Sentencias de control
