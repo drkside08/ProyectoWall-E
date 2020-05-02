@@ -9,7 +9,7 @@ int LAmarillo=9;//<--Etapa de Programacion
 int LRojo=10;//<--Etapa de Paro
 int LAnaranjado=11;//<--Etapa de Test
 int LRojo2=12;//<--Led aux;
-void setup() {
+void setup2() {
   Serial.begin(9600);
   pinMode(BArranque,INPUT);
   pinMode(BParo,INPUT);
@@ -105,7 +105,7 @@ void Selector(){
    
 }
 
-void loop()
+void loop2()
 {
   Test();
   delay(1000);     
