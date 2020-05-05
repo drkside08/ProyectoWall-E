@@ -4,4 +4,4 @@ Subir archivos:
 Rescan-->Stage Changed-->Sing Off-->Commit-->Push--->Master-->Push
 
 Bajar Archivos:
-hhhh
+Remote-->Fetch From-->origin-->close-->Merge-->Local Merge-->origin-->Merge
