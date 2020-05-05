@@ -5,8 +5,8 @@ int BParo=5;
 int B4=6;
 int BTest=7;
 int LVerde=8;//<--Etapa de Pintar
-int LAmarillo=9;//<--Etapa de Programacion
-int LRojo=10;//<--Etapa de Paro
+int LAmarillo=10;//<--Etapa de Programacion
+int LRojo=9;//<--Etapa de Paro
 int LAnaranjado=11;//<--Etapa de Test
 int LRojo2=12;//<--Led aux;
 //------------------------------------------
@@ -16,6 +16,7 @@ unsigned long Inicio2=0;
 unsigned long Intervalo=100;
 unsigned long Intervalo2=100;
 //------------------------------------
+float Distancia;
 
 
 void setup(){
@@ -132,15 +133,58 @@ void Test(){
    digitalWrite(LRojo2,LOW);
 }
 void Programar(){
+  int Opc=0;
+  unsigned long InicioP=millis();
+  unsigned long Actual=0;
+  unsigned long Tiempo=0;
+  digitalWrite(LAmarillo,HIGH);
+  delay(500);
+  do{
+     if(digitalRead(B4)==HIGH){
+        Opc=1;Distancia=2.5;
+     }
+     if(digitalRead(BTest)==HIGH){
+        Opc=2;Distancia=4;
+     }
+     switch(Opc){
+      case 2:
+        digitalWrite(LAnaranjado,LOW);
+        Tiempo=500;
+        Actual=millis();
+        if((unsigned long)(Actual-InicioP)>=Tiempo){
+        CambiarLed2(LRojo2);
+        InicioP=Actual;
+        }
+      break;
+      case 1:
+        digitalWrite(LRojo2,LOW);
+        Tiempo=500;
+        Actual=millis();
+        if((unsigned long)(Actual-InicioP)>=Tiempo){
+        CambiarLed2(LAnaranjado);
+        InicioP=Actual;
+        }
+      break;
+      case 0:
+      digitalWrite(LAmarillo,HIGH);
+      break;
+      }
+      }while(digitalRead(BParo)!=HIGH);
+      digitalWrite(LAnaranjado,LOW);
+      digitalWrite(LRojo2,LOW);
   
 }
 void Pintar(){
+  digitalWrite(LVerde,HIGH);
   
 }
 
 void loop(){
   if(digitalRead(BArranque)==HIGH){
-   
+   Pintar();
+  }
+  if(digitalRead(B4)==HIGH){
+   Programar();
   }
   if(digitalRead(BTest)==HIGH){
    Test(); 
