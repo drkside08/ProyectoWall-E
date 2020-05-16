@@ -9,13 +9,13 @@ void setup() {
 void Funcion_A(){
    Actual=0;
    Actual=millis()-Inicio;
-   Serial.print("Accion A-->"); 
+   Serial.print("Pintando-->"); 
    Serial.println(Actual); 
 }
 void Funcion_B(){
    Actual=0;
    Actual=millis()-Inicio;
-   Serial.print("Accion B-->"); 
+   Serial.print("Nivel de pintura-->"); 
    Serial.println(Actual); 
 }
 void loop() {
@@ -23,7 +23,4 @@ void loop() {
   delay(1500);
   Funcion_B();
   delay(500);
-  
-  
-
 }
