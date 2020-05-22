@@ -17,6 +17,8 @@ unsigned long Intervalo=100;
 unsigned long Intervalo2=100;
 //------------------------------------
 float Distancia;
+int flag=1;
+bool Pro=false;
 
 
 void setup(){
@@ -33,6 +35,7 @@ void setup(){
   pinMode(LVerde,OUTPUT);
   pinMode(LAmarillo,OUTPUT);
   pinMode(13,OUTPUT);
+  attachInterrupt(digitalPinToInterrupt(2), Paro, RISING);
   Inicio1=millis();
 }
 void CambiarLed1(int A){
@@ -58,15 +61,15 @@ void Test(){
     Serial.println(Valor);
     if(Valor>=3.75){
       if(Valor>=4.80){
-        Aux=5;
+        Aux=5;   
       }
       else{
-        Aux=4;
+        Aux=4; 
       }
     }
     else{
       if(Valor>=2.5){
-        Aux=3;
+        Aux=3; 
       }
       else{
         if(Valor>=1.25){
@@ -74,7 +77,7 @@ void Test(){
         }
         else{
           if(Valor>=.50){
-            Aux=1; 
+            Aux=1;
           }
           else{
             Aux=0;
@@ -89,7 +92,7 @@ void Test(){
       case 4:
         //digitalWrite(LRojo2,LOW);
         Tiempo=500;
-        Punto=millis();
+        Punto=millis(); 
         if((unsigned long)(Punto-InicioP)>=Tiempo){
         CambiarLed2(LRojo2);
         InicioP=Punto;
@@ -176,15 +179,35 @@ void Programar(){
 }
 void Pintar(){
   digitalWrite(LVerde,HIGH);
+  unsigned long InicioP=millis();
+  unsigned long Actual=0;
+  unsigned long Tiempo=0;
+  Serial.write("\xa0\x01\x01\xa2");
   
 }
-
+void Paro(){
+  digitalWrite(LRojo,HIGH);
+  unsigned long InicioP=millis();
+  unsigned long Actual=0;
+  unsigned long Tiempo=500;
+  Serial.write("\xa0\x01");
+  Serial.write(0x00);
+  Serial.write(0xa1);
+  if((unsigned long)(Actual-InicioP)>=Tiempo){
+        CambiarLed2(LRojo2);
+        InicioP=Actual;
+  }
+}
 void loop(){
-  if(digitalRead(BArranque)==HIGH){
+  
+  if((digitalRead(BArranque)==HIGH) && (Pro==true)){
    Pintar();
   }
   if(digitalRead(B4)==HIGH){
    Programar();
+   if(Distancia != 0 ){
+    Pro=true;
+   }
   }
   if(digitalRead(BTest)==HIGH){
    Test(); 
